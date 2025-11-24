@@ -1,24 +1,93 @@
 <!DOCTYPE html>
-<html lanh="en">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewpoint" content="width=device-width, intitial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>WhiskerWorthy</title>
         <link rel="stylesheet" href="style.css">
-        <script src="script.js"></script>
+        
     </head>
     <body>
-        <header class="header_section_header_transparent">
-            <div class="topbar">
-                <div class="row top-nav">
-                    <div class="col-lg-3">
-                    <img src=""
+        <!--header-->
+        <header>
+            <img src="logoss.png" alt="WhiskerWorthylogo">
+            
+        </header>
+          <!-- Form submits to /api/submit-dog-info endpoint using POST method -->
+    <form id="dogQuestionnaireForm" action="/api/submit-dog-info" method="POST">
+        
+        <!-- Breed Name Field (maps to breed_name_AKC in database) -->
+        <label for="breed_name">Breed Name:</label>
+        <input 
+            type="text" 
+            id="breed_name" 
+            name="breed_name_AKC" 
+            required 
+            placeholder="Choose the AKC breed name or the catch-all group at the bottom"
+        >
+        <div class="helper-text">Enter the official American Kennel Club breed name</div>
 
+        <!-- Dog's Age Field (maps to age_years_preReg in database) -->
+        <label for="age_years">Dog's Age (in years):</label>
+        <input 
+            type="number" 
+            id="age_years" 
+            name="age_years_preReg" 
+            step="0.1" 
+            min="0" 
+            max="30" 
+            required 
+            placeholder="e.g., 3.5 for 3 and a half years"
+        >
+        <div class="helper-text">You can use 1 decimal (e.g., 3.5 for three and a half years old)</div>
+
+        <!-- Diet-Related Health Status Field (maps to status_dietRelat_preReg in database) -->
+        <!-- Using checkboxes to allow multiple selections -->
+        <fieldset>
+            <legend>Diet-Related Health Status:</legend>
+            <div class="helper-text" style="margin-top: 0;">Mark all that apply. If none apply, mark "None".</div>
+            
+            <div class="checkbox-group">
+                <!-- Each checkbox value matches database expected values -->
+                <div class="checkbox-item">
+                    <input type="checkbox" id="status_none" name="status_dietRelat_preReg" value="none">
+                    <label for="status_none">None - No special dietary needs or health issues</label>
                 </div>
-
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="status_puppy" name="status_dietRelat_preReg" value="puppy">
+                    <label for="status_puppy">Puppy - Growing dog (usually under 1 year)</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="status_elderly" name="status_dietRelat_preReg" value="elderly">
+                    <label for="status_elderly">Elderly/Senior - Older dog with age-related needs</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="status_pregnant" name="status_dietRelat_preReg" value="pregnant">
+                    <label for="status_pregnant">Pregnant - Expecting mother dog</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="status_allergy" name="status_dietRelat_preReg" value="allergy">
+                    <label for="status_allergy">Allergy - Food or environmental allergies</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="status_other" name="status_dietRelat_preReg" value="other_health">
+                    <label for="status_other">Other Health Issues - Other medical conditions</label>
                 </div>
             </div>
+        </fieldset>
 
-        </header>
+        <!-- Submit Button - triggers form submission to backend -->
+        <button type="submit">Submit Dog Information</button>
+    </form>
+  <!-- Logo Image    <img 
+       
+        alt="WhiskerWorthy Logo" 
+        class="logo-divider"
+        <script src="script.js"></script>
     </body>
 </html>
