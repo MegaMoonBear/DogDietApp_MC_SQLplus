@@ -24,7 +24,8 @@ CREATE TABLE questions_dog_initial3 (
   id_preRegister SERIAL PRIMARY KEY,  --see questions_dog_initial3 table's "id" field
   breed_name_AKC TEXT SECONDARY KEY,  --see questions_dog_initial3 table's "id" field
   age_years_preReg DECIMAL(3,1), -- 3 = total digits allowed, 1 = digits after decimal
-  status_dietRelat_preReg TEXT -- none, puppy, elderly, pregnant, allergy, "Other health issues"
+  status_dietRelat_preReg TEXT, -- none, puppy, elderly, pregnant, allergy, "Other health issues"
+  modified_preReg TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );  
  
   -- status_dietRelated -- INTERNAL VARIABLE NAME: noneV1, puppy, elderly, pregnant, allergy, OtherHealthV1
