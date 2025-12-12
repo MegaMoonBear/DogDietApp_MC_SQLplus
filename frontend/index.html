@@ -1,17 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>WhiskerWorthy</title>
-        <!-- File location: frontend/index.html - Entry point for Vite React app -->
-    </head>
-    <body>
-        <!-- React app mount point - React will render all components inside this div -->
-        <div id="root"></div>
-        
-        <!-- Module script imports main.jsx which bootstraps the React application -->
-        <!-- Vite processes this import and bundles all React components and dependencies -->
-        <script type="module" src="/src/main.jsx"></script>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhiskerWorthy | Dog Diet Questionnaire</title>
+    <link rel="stylesheet" href="./public/style.css">
+</head>
+<body>
+    <header class="hero">
+        <img src="./public/assets/doggy.jpeg" alt="WhiskerWorthy" class="header-logo">
+        <h1>WhiskerWorthy</h1>
+        <p class="intro-text">
+            WhiskerWorthy helps you consider factors to choose foods for your dog and discuss them with your veterinarian.
+            Answer three quick questions to prep for your next vet visit and join a community of dog owners who care about
+            proper feeding. Over the next few years, the information you share may help us collaborate with researchers and
+            shape smarter food recommendations.
+        </p>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Dog Diet Questionnaire</h2>
+            <form id="dogQuestionnaireForm" novalidate>
+                <label for="breed_name">Breed Name:</label>
+                <input
+                    type="text"
+                    id="breed_name"
+                    name="breed_name_AKC"
+                    required
+                    placeholder="Choose the AKC breed name or the catch-all group at the bottom"
+                >
+                <div class="helper-text">Enter the official American Kennel Club breed name.</div>
+
+                <label for="age_years">Dog's Age (years):</label>
+                <input
+                    type="number"
+                    id="age_years"
+                    name="age_years_preReg"
+                    step="0.1"
+                    min="0"
+                    max="30"
+                    required
+                    placeholder="e.g., 3.5 for three and a half years"
+                >
+                <div class="helper-text">Use one decimal place if needed (e.g., 3.5).</div>
+
+                <fieldset>
+                    <legend>Diet-Related Health Status</legend>
+                    <div class="helper-text">Mark all that apply. If none apply, mark "None".</div>
+
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="status_none" name="status_dietRelat_preReg" value="none">
+                            <label for="status_none">None - No special dietary needs or health issues</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="status_puppy" name="status_dietRelat_preReg" value="puppy">
+                            <label for="status_puppy">Puppy - Growing dog (usually under 1 year)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="status_elderly" name="status_dietRelat_preReg" value="elderly">
+                            <label for="status_elderly">Elderly/Senior - Older dog with age-related needs</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="status_pregnant" name="status_dietRelat_preReg" value="pregnant">
+                            <label for="status_pregnant">Pregnant - Expecting mother dog</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="status_allergy" name="status_dietRelat_preReg" value="allergy">
+                            <label for="status_allergy">Allergy - Food or environmental allergies</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="status_other" name="status_dietRelat_preReg" value="other_health">
+                            <label for="status_other">Other Health Issues - Other medical conditions</label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <button type="submit">Submit Dog Information</button>
+            </form>
+        </section>
+
+        <img
+            src="./public/assets/WhiskWorLogosGemini_Wide.png"
+            alt="WhiskerWorthy Divider"
+            class="logo-divider"
+        >
+
+        <section class="card">
+            <h2>Team Member Admin Panel</h2>
+            <p class="admin-info">For project team members only - update breed information in the database.</p>
+
+            <form id="adminUpdateForm" novalidate>
+                <label for="search_field">Search By:</label>
+                <select id="search_field" name="search_field" required>
+                    <option value="breed_name_AKC">Breed Name (AKC)</option>
+                    <option value="dogapi_id">Dog API ID</option>
+                </select>
+                <div class="helper-text">Choose how you want to identify the breed to update.</div>
+
+                <label for="search_value">Search Value:</label>
+                <input
+                    type="text"
+                    id="search_value"
+                    name="search_value"
+                    required
+                    placeholder="Enter breed name or Dog API ID"
+                >
+                <div class="helper-text">Enter the breed name or ID to find the record you want to update.</div>
+
+                <fieldset>
+                    <legend>Update Fields (fill only what you want to change)</legend>
+
+                    <label for="admin_breed_otherNames">Other Breed Names:</label>
+                    <input
+                        type="text"
+                        id="admin_breed_otherNames"
+                        name="breed_otherNames"
+                        placeholder="Separate multiple names with semicolon"
+                    >
+
+                    <label for="admin_breed_group_AKC">Breed Group (AKC):</label>
+                    <input
+                        type="text"
+                        id="admin_breed_group_AKC"
+                        name="breed_group_AKC"
+                        placeholder="e.g., sporting, hound, working, terrier"
+                    >
+
+                    <label for="admin_breed_size_categ_AKC">Size Category (AKC):</label>
+                    <select id="admin_breed_size_categ_AKC" name="breed_size_categ_AKC">
+                        <option value="">-- No Change --</option>
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                        <option value="extra large">Extra Large</option>
+                    </select>
+
+                    <label for="admin_breed_life_expect_yrs">Life Expectancy (years):</label>
+                    <input
+                        type="number"
+                        id="admin_breed_life_expect_yrs"
+                        name="breed_life_expect_yrs"
+                        step="0.1"
+                        min="0"
+                        max="30"
+                        placeholder="e.g., 12.5"
+                    >
+
+                    <label for="admin_food_recomm_brand">Recommended Food Brand:</label>
+                    <input
+                        type="text"
+                        id="admin_food_recomm_brand"
+                        name="food_recomm_brand"
+                        placeholder="e.g., Nutri-Source, Blue Buffalo"
+                    >
+
+                    <label for="admin_food_recomm_product">Recommended Food Product:</label>
+                    <input
+                        type="text"
+                        id="admin_food_recomm_product"
+                        name="food_recomm_product"
+                        placeholder="e.g., Fromm Gold Large Breed Adult Kibble"
+                    >
+
+                    <label for="admin_food_recomm_format">Recommended Food Format:</label>
+                    <select id="admin_food_recomm_format" name="food_recomm_format">
+                        <option value="">-- No Change --</option>
+                        <option value="kibble">Kibble (Dry)</option>
+                        <option value="wet">Wet (Canned)</option>
+                        <option value="raw">Raw</option>
+                        <option value="freeze-dried">Freeze-Dried</option>
+                        <option value="dehydrated">Dehydrated</option>
+                    </select>
+
+                    <label for="admin_listed_DogDiet_MVP">Listed in DogDiet MVP:</label>
+                    <select id="admin_listed_DogDiet_MVP" name="listed_DogDiet_MVP">
+                        <option value="">-- No Change --</option>
+                        <option value="Y">Y - Yes, include in MVP</option>
+                        <option value="N">N - No, not yet in MVP</option>
+                    </select>
+                </fieldset>
+
+                <button type="submit">Update Breed Information</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="./public/main.js"></script>
+</body>
 </html>
