@@ -1,4 +1,4 @@
-# Environment variables file - contains sensitive database credentials
+# Environment variables file - contains sensitive database credentials - protects PostGreSQL connection string specifics for MC; Neon; PGAdmin4; psql tools
 .env
 
 # Python cache files
@@ -17,3 +17,4 @@ ENV/
 .idea/
 *.swp
 *.swo
+

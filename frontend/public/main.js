@@ -10,6 +10,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Populate breed dropdown from API so the list stays in sync with the database
+  const breedSelect = document.getElementById('breed_name');
+  if (breedSelect) {
+    fetch('/api/breeds')
+      .then((response) => (response.ok ? response.json() : Promise.reject()))
+      .then((data) => {
+        const breeds = data?.breeds || [];
+        breeds.forEach((b) => {
+          const option = document.createElement('option');
+          option.value = b.breed_name_AKC;
+          option.textContent = b.breed_name_AKC;
+          breedSelect.appendChild(option);
+        });
+      })
+      .catch(() => {
+        // No-op fallback: leave any existing options or manual input
+      });
+  }
+
   if (dogForm) {
     dogForm.addEventListener('submit', async (event) => {
       event.preventDefault();

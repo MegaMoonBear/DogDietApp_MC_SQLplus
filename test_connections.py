@@ -29,10 +29,9 @@ print("=" * 60)
 print("\n1️⃣  FRONTEND FILES:")
 frontend_files = [
     'frontend/index.html',
-    'frontend/package.json',
-    'frontend/vite.config.js',
-    'frontend/src/App.jsx',
-    'frontend/src/main.jsx'
+    'frontend/public/main.js',
+    'frontend/public/style.css',
+    'frontend/public/assets/doggy.jpeg'
 ]
 for file in frontend_files:
     exists = Path(file).exists()
@@ -107,7 +106,7 @@ async def test_database():
             print(f"     • {table['table_name']}")
         
         # Check if our tables exist
-        required_tables = ['breeds_akc_rsrch_foodv1', 'questions_dog_initial3']
+        required_tables = ['breedsakc_ids_v3', 'questions_home_dog_4q_v2']
         for table in required_tables:
             exists = any(t['table_name'] == table for t in tables)
             status = "✅" if exists else "❌"
@@ -125,22 +124,8 @@ except Exception as e:
     print(f"  ❌ Database test error: {e}")
     db_connected = False
 
-# Test 6: Check Vite proxy configuration
-print("\n6️⃣  VITE PROXY CONFIG:")
-vite_config = Path('frontend/vite.config.js')
-if vite_config.exists():
-    content = vite_config.read_text()
-    has_proxy = 'proxy' in content and '/api' in content
-    if has_proxy:
-        print(f"  ✅ Vite proxy configured for /api routes")
-    else:
-        print(f"  ❌ Vite proxy NOT configured")
-        print(f"  💡 Add proxy config to vite.config.js")
-else:
-    print(f"  ❌ vite.config.js not found")
-
-# Test 7: Check Python dependencies
-print("\n7️⃣  PYTHON DEPENDENCIES:")
+# Test 6: Check Python dependencies
+print("\n6️⃣  PYTHON DEPENDENCIES:")
 required_packages = ['fastapi', 'uvicorn', 'asyncpg', 'pydantic', 'python-dotenv']
 for package in required_packages:
     try:
@@ -149,8 +134,8 @@ for package in required_packages:
     except ImportError:
         print(f"  ❌ {package} - Run: pip install {package}")
 
-# Test 8: Frontend dev server check
-print("\n8️⃣  FRONTEND DEV SERVER:")
+# Test 7: Frontend static server check
+print("\n7️⃣  FRONTEND STATIC SERVER:")
 frontend_url = "http://localhost:5173"
 try:
     response = requests.get(frontend_url, timeout=3)
@@ -160,7 +145,7 @@ try:
         print(f"  ⚠️  Frontend responded with status {response.status_code}")
 except requests.exceptions.ConnectionError:
     print(f"  ❌ Frontend NOT running at {frontend_url}")
-    print(f"  💡 Run: cd frontend && npm run dev")
+    print(f"  💡 Run: cd frontend && python -m http.server 5173")
 except Exception as e:
     print(f"  ❌ Error: {e}")
 
@@ -170,7 +155,7 @@ print("📊 TEST SUMMARY")
 print("=" * 60)
 print("\n✅ = Working | ❌ = Issue Found | ⚠️  = Warning\n")
 print("🔗 To start the full app:")
-print("   Terminal 1: cd frontend && npm run dev")
+print("   Terminal 1: cd frontend && python -m http.server 5173")
 print("   Terminal 2: python backend/main.py")
 print("   Browser:    http://localhost:5173")
 print("\n" + "=" * 60)

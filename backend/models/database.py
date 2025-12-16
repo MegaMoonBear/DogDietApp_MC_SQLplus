@@ -114,15 +114,15 @@ async def fetch_all(query: str, *args):
 
 # Example 1: Insert data
 # await execute_query(
-#     "INSERT INTO questions_dog_initial3 (breed_name_AKC, age_years_preReg, status_dietRelat_preReg) VALUES ($1, $2, $3)",
+#     "INSERT INTO questions_home_dog_4Q_v2 (breed_name_AKC, age_years_preReg, status_dietRelat_preReg) VALUES ($1, $2, $3)",
 #     "Labrador Retriever", 3.5, "none"
 # )
 
 # Example 2: Fetch one record
 # breed = await fetch_one(
-#     "SELECT * FROM breeds_AKC_Rsrch_FoodV1 WHERE breed_name_AKC = $1",
+#     "SELECT * FROM breedsAKC_IDs_v3 WHERE breed_name_AKC = $1",
 #     "Labrador Retriever"
 # )
 
 # Example 3: Fetch all records
-# all_breeds = await fetch_all("SELECT * FROM breeds_AKC_Rsrch_FoodV1")
+# all_breeds = await fetch_all("SELECT * FROM breedsAKC_IDs_v3")

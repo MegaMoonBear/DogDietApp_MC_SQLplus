@@ -16,7 +16,7 @@ async def create_tables():
         
         # Create breeds table
         await conn.execute("""
-            CREATE TABLE IF NOT EXISTS breeds_AKC_Rsrch_FoodV1 (
+            CREATE TABLE IF NOT EXISTS breedsAKC_IDs_v3 (
               breed_name_AKC TEXT PRIMARY KEY,
               breed_group_AKC TEXT,
               breed_life_expect_yrs DECIMAL(3,1),
@@ -25,11 +25,11 @@ async def create_tables():
               dogapi_id TEXT
             );
         """)
-        print("  ✅ Created table: breeds_AKC_Rsrch_FoodV1")
+        print("  ✅ Created table: breedsAKC_IDs_v3")
         
         # Create questions table
         await conn.execute("""
-            CREATE TABLE IF NOT EXISTS questions_dog_initial3 (
+            CREATE TABLE IF NOT EXISTS questions_home_dog_4Q_v2 (
               id_dog_preRegis SERIAL PRIMARY KEY,
               breed_name_AKC TEXT,
               age_years_preReg DECIMAL(3,1),
@@ -37,7 +37,7 @@ async def create_tables():
               modified_preReg TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         """)
-        print("  ✅ Created table: questions_dog_initial3")
+        print("  ✅ Created table: questions_home_dog_4Q_v2")
         
         # Verify tables were created
         result = await conn.fetch("""

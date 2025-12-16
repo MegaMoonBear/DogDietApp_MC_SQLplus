@@ -21,6 +21,9 @@
     <main>
         <section class="card">
             <h2>Dog Diet Questionnaire</h2>
+            <p>Please answer 3 questions about your dog. Then we suggest 3 nutrition questions for you to ask your veterinarian.</p>
+            <p>If a "pit bull", please choose American Staffordshire Terrier. (Staffordshire Bull Terrier also listed.) Or select Other/Mixed. 
+            <p>Later phases will ask more about traits, health, breed, etc.</p>
             <form id="dogQuestionnaireForm" novalidate>
                 <label for="breed_name">Breed Name:</label>
                 <input
@@ -30,7 +33,7 @@
                     required
                     placeholder="Choose the AKC breed name or the catch-all group at the bottom"
                 >
-                <div class="helper-text">Enter the official American Kennel Club breed name.</div>
+                <div class="helper-text">Choose official American Kennel Club breed name or "Other/Mixed/Unsure".</div>
 
                 <label for="age_years">Dog's Age (years):</label>
                 <input
@@ -147,32 +150,6 @@
                         max="30"
                         placeholder="e.g., 12.5"
                     >
-
-                    <label for="admin_food_recomm_brand">Recommended Food Brand:</label>
-                    <input
-                        type="text"
-                        id="admin_food_recomm_brand"
-                        name="food_recomm_brand"
-                        placeholder="e.g., Nutri-Source, Blue Buffalo"
-                    >
-
-                    <label for="admin_food_recomm_product">Recommended Food Product:</label>
-                    <input
-                        type="text"
-                        id="admin_food_recomm_product"
-                        name="food_recomm_product"
-                        placeholder="e.g., Fromm Gold Large Breed Adult Kibble"
-                    >
-
-                    <label for="admin_food_recomm_format">Recommended Food Format:</label>
-                    <select id="admin_food_recomm_format" name="food_recomm_format">
-                        <option value="">-- No Change --</option>
-                        <option value="kibble">Kibble (Dry)</option>
-                        <option value="wet">Wet (Canned)</option>
-                        <option value="raw">Raw</option>
-                        <option value="freeze-dried">Freeze-Dried</option>
-                        <option value="dehydrated">Dehydrated</option>
-                    </select>
 
                     <label for="admin_listed_DogDiet_MVP">Listed in DogDiet MVP:</label>
                     <select id="admin_listed_DogDiet_MVP" name="listed_DogDiet_MVP">
