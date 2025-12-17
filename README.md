@@ -6,9 +6,11 @@ Static HTML/CSS/JS frontend + FastAPI backend for dog diet intake and admin upda
 2) Update breed-ID table with breed-group IDs and names for API communication
 3) Display 3 preset veterinarian questions tailored to user responses 
 4) Generate 3 questions for veterinarian with AI (*Ultimate goal*)
-5) PRepare to collect initial crowd-sourced data for AI analyses 
-______ Ensure the breed IDs table (breedsAKC_IDs_v3) is the source for the drop-down breed list in the first question. (((___))) For the breed IDs table - breedsAKC_IDs_v3, create IF...ELSE syntax in response to user responses to 1st and 3rd questions from ___ Based on the responses to first and third questions, show 3 pre-set questions from the ((())) a SQL script that creates a table and loads data and a python script that uses the created DB ((())) breed-ID table ((())) GET /api/questions/preset — returns up to three preset vet questions, lightly tailored by query params (breed_name_AKC, age_years_preReg, status_dietRelat_preReg[]). Uses `questions_home_dog_4Q_v2` as the storage table for collected responses.
-POST /api/questions/ai — returns three placeholder AI-style questions based on the questionnaire payload; includes a TODO for real LLM integration. ((())) Add inline comments about any syntax lines that are ciritical or initial uses in each file related to yesterday's or today's changes.
+5) Prepare to collect initial crowd-sourced data for AI analyses 
+______  Seed other table with info... SHOULD THIS BE THE USER_RESPONSE TABLE?   (((___))) For the breed IDs table - breedsAKC_IDs_v3, create IF...ELSE syntax in response to user responses to 1st and 3rd questions from ___ Based on the responses to first and third questions, show 3 pre-set questions from the ____ {[ADD INLINE COMMENTS]} 
+((())) a SQL script that creates a table and loads data and a python script that uses the created DB  {[ADD INLINE COMMENTS]} 
+((())) GET /api/questions/preset — returns up to three preset vet questions, lightly tailored by query params (breed_name_AKC, age_years_preReg, status_dietRelat_preReg[]). Uses `questions_home_dog_4Q_v2` as the storage table for collected responses.
+POST /api/questions/ai — returns three placeholder AI-style questions based on the questionnaire payload; includes a TODO for real LLM integration. {[ADD INLINE COMMENTS - Add inline comments about any syntax lines that are critical or initial uses in each file related to yesterday's or today's changes.  OROROROR  For any changes from today, add inline comments about any syntax lines that are critical or initial uses in each file]}
 
 ## Layout
 - frontend/ — static site (index.html, public/style.css, public/main.js, assets)

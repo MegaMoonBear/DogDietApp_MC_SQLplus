@@ -10,22 +10,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Populate breed dropdown from API so the list stays in sync with the database
-  const breedSelect = document.getElementById('breed_name');
-  if (breedSelect) {
+  // Populate searchable breed datalist from API so the list stays in sync with the database
+  // Critical: `fetch('/api/breeds')` must return JSON with a `breeds` array of objects containing `breed_name_AKC`.
+  const breedInput = document.getElementById('breed_name');
+  const breedDatalist = document.getElementById('breed_list');
+  if (breedInput && breedDatalist) {
     fetch('/api/breeds')
       .then((response) => (response.ok ? response.json() : Promise.reject()))
       .then((data) => {
         const breeds = data?.breeds || [];
         breeds.forEach((b) => {
+          // Initial use: add option.value as breed name so datalist suggestions map directly to input value
           const option = document.createElement('option');
           option.value = b.breed_name_AKC;
-          option.textContent = b.breed_name_AKC;
-          breedSelect.appendChild(option);
+          breedDatalist.appendChild(option);
         });
       })
       .catch(() => {
-        // No-op fallback: leave any existing options or manual input
+        // No-op fallback: leave input as free-text if API fails; users can still submit manually
       });
   }
 

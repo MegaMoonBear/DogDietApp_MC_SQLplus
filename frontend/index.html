@@ -22,17 +22,22 @@
         <section class="card">
             <h2>Dog Diet Questionnaire</h2>
             <p>Please answer 3 questions about your dog. Then we suggest 3 nutrition questions for you to ask your veterinarian.</p>
-            <p>If a "pit bull", please choose American Staffordshire Terrier. (Staffordshire Bull Terrier also listed.) Or select Other/Mixed. 
+            <p>If a "pit bull", please choose American Staffordshire Terrier. (Staffordshire Bull Terrier also listed.) Or select Other/Mixed.</p>
             <p>Later phases will ask more about traits, health, breed, etc.</p>
             <form id="dogQuestionnaireForm" novalidate>
                 <label for="breed_name">Breed Name:</label>
+                <!-- Searchable breed input backed by a datalist populated from the DB -->
+                <!-- Critical: `id="breed_name"` and `name="breed_name_AKC"` must match JS and backend form fields -->
                 <input
                     type="text"
                     id="breed_name"
                     name="breed_name_AKC"
+                    list="breed_list"
                     required
-                    placeholder="Choose the AKC breed name or the catch-all group at the bottom"
+                    placeholder="Start typing to search breeds (e.g., Labrador Retriever)"
                 >
+                <!-- Datalist element receives <option> entries from frontend/public/main.js -->
+                <datalist id="breed_list"></datalist>
                 <div class="helper-text">Choose official American Kennel Club breed name or "Other/Mixed/Unsure".</div>
 
                 <label for="age_years">Dog's Age (years):</label>
