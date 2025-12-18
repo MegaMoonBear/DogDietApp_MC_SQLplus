@@ -5,7 +5,11 @@
 
 # FastAPI backend for Dog Diet App - Example from Week 2's Day 2 (under Module 4, Unit 1)
 
- 
+# Note on AI Service:
+# Originally, this project used the ViggoVet dataset for context.
+# We have switched to using OpenAI's gpt-4o-mini model directly for reliable, language-oriented responses.
+# A Google API key was not available, so we are using the OpenAI library instead of Gemini.
+
 import openai
 
 # ✅ Initialize OpenAI client

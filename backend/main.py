@@ -9,9 +9,13 @@
 
 from fastapi import FastAPI, HTTPException, Path, Query  # Import FastAPI framework and utilities
 from fastapi.middleware.cors import CORSMiddleware  # Import CORS middleware to allow frontend to call backend from different origin
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from typing import List, Optional, Dict, Any  # Import type hints for better code clarity
 import uvicorn  # Import uvicorn ASGI server to run FastAPI
 import logging
+import os
+from contextlib import asynccontextmanager
 from fastapi.concurrency import run_in_threadpool
 
 # Import business logic from services folder
@@ -37,11 +41,29 @@ from models.database import (
 )
 from services.chat_services import chat_with_gpt
 
+# ==================== Application Lifecycle Events ====================
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Lifespan context manager for FastAPI application.
+    Handles startup and shutdown events.
+    """
+    # Startup
+    await get_database_pool()  # Create database connection pool
+    print("✅ Database connection pool initialized")
+    yield
+    # Shutdown
+    await close_database_pool()  # Close all database connections
+    print("✅ Database connection pool closed")
+
+
 # Initialize FastAPI application
 app = FastAPI(
     title="Dog Diet API",  # API title shown in automatic documentation
     description="API for dog diet recommendations and breed management",  # Description for docs
-    version="1.0.0"  # Version number
+    version="1.0.0",  # Version number
+    lifespan=lifespan
 )
 
 # Configure CORS - allows frontend on different port/domain to access this API
@@ -53,27 +75,18 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
+# Mount static files
+# We need to go up one level from 'backend' to reach 'frontend'
+frontend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend'))
+public_path = os.path.join(frontend_path, 'public')
 
-# ==================== Application Lifecycle Events ====================
+# Mount the public directory to serve CSS, JS, and assets
+app.mount("/public", StaticFiles(directory=public_path), name="public")
 
-@app.on_event("startup")
-async def startup_event():
-    """
-    Runs when the FastAPI application starts.
-    Initializes the database connection pool.
-    """
-    await get_database_pool()  # Create database connection pool
-    print("✅ Database connection pool initialized")
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """
-    Runs when the FastAPI application shuts down.
-    Closes the database connection pool gracefully.
-    """
-    await close_database_pool()  # Close all database connections
-    print("✅ Database connection pool closed")
+# Serve index.html at the root
+@app.get("/")
+async def read_index():
+    return FileResponse(os.path.join(frontend_path, 'index.html'))
 
 
 # ==================== GET ROUTES - Retrieve Data ====================

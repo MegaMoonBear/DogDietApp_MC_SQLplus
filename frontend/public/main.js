@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+/*
   if (adminForm) {
     adminForm.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -159,4 +160,5 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+*/
 });

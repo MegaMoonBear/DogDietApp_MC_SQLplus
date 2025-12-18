@@ -226,6 +226,7 @@ button[type="submit"]:active {
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
 }
 
+/*
 .admin-info {
     text-align: center;
     color: var(--muted);
@@ -233,3 +234,4 @@ button[type="submit"]:active {
     margin: 0 0 16px;
     font-style: italic;
 }
+*/
