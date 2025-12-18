@@ -11,6 +11,8 @@ from fastapi import FastAPI, HTTPException, Path, Query  # Import FastAPI framew
 from fastapi.middleware.cors import CORSMiddleware  # Import CORS middleware to allow frontend to call backend from different origin
 from typing import List, Optional, Dict, Any  # Import type hints for better code clarity
 import uvicorn  # Import uvicorn ASGI server to run FastAPI
+import logging
+from fastapi.concurrency import run_in_threadpool
 
 # Import business logic from services folder
 from services.report_service import choose_report  # Import the report selection function
@@ -33,6 +35,7 @@ from models.database import (
     fetch_one,  # Fetch single row
     fetch_all  # Fetch multiple rows
 )
+from services.chat_services import chat_with_gpt
 
 # Initialize FastAPI application
 app = FastAPI(
@@ -163,21 +166,60 @@ async def get_preset_questions(
     return {"success": True, "questions": questions[:3]}
 
 
-# AI-generated questions (stubbed; replace with LLM later)
+# AI-generated questions - calls the chat service safely and returns assistant text
 @app.post("/api/questions/ai")
 async def generate_ai_questions(data: DogQuestionnaireInput):
-    """Return three placeholder AI-style vet questions based on user input."""
-    breed = data.breed_name_AKC or "the dog"
-    statuses = ", ".join(data.status_dietRelat_preReg) if data.status_dietRelat_preReg else "none"
+    """Build a concise user input from questionnaire and call the LLM.
 
-    ai_questions = [
-        f"For {breed}, what diet best fits age {data.age_years_preReg} and statuses ({statuses})?",
-        "Which lab checks should we monitor to confirm the diet is working?",
-        "What signs would indicate we should adjust protein, fat, or calories?",
-    ]
+    Validation and logging:
+    - Validate `age_years_preReg` is reasonable (non-negative, not absurdly large).
+    - Validate `status_dietRelat_preReg` is a short list of strings.
+    - Log only non-sensitive fields (breed, age, statuses) without secrets.
 
-    # TODO: replace stub with real LLM integration
-    return {"success": True, "questions": ai_questions}
+    The AI prompt intentionally ignores the breed for content safety; only age
+    and health statuses are sent to the model as described in `chat_services.py`.
+    """
+    logger = logging.getLogger(__name__)
+
+    # Basic validation
+    age = data.age_years_preReg
+    statuses = data.status_dietRelat_preReg or []
+
+    if age is not None:
+        try:
+            age_val = float(age)
+        except Exception:
+            raise HTTPException(status_code=400, detail="Invalid age value; must be numeric")
+        if age_val < 0 or age_val > 30:
+            raise HTTPException(status_code=400, detail="Age must be between 0 and 30 years")
+
+    if not isinstance(statuses, list):
+        raise HTTPException(status_code=400, detail="status_dietRelat_preReg must be a list of strings")
+    if len(statuses) > 10:
+        raise HTTPException(status_code=400, detail="Too many status items; maximum 10 allowed")
+
+    # Log the incoming (non-sensitive) payload for auditing
+    logger.info("AI question request - breed=%s age=%s statuses=%s", data.breed_name_AKC, age, statuses)
+
+    # Build concise user input string (ignore breed per policy)
+    statuses_str = ", ".join(statuses) if statuses else "none"
+    user_input = f"Dog age: {age if age is not None else 'unknown'} years. Health status: {statuses_str}."
+
+    try:
+        # chat_with_gpt is blocking (calls external SDK); run in threadpool to avoid blocking event loop
+        assistant_text = await run_in_threadpool(chat_with_gpt, user_input)
+
+        # Return assistant text as the AI-generated questions. The string may contain
+        # line-separated questions; the frontend can split if a list is preferred.
+        return {"success": True, "questions": assistant_text}
+
+    except HTTPException:
+        # Re-raise HTTPExceptions raised above
+        raise
+    except Exception as e:
+        # Log the error server-side without exposing internal details to client
+        logger.exception("Error generating AI questions: %s", str(e))
+        raise HTTPException(status_code=500, detail="Failed to generate AI questions")
 
 @app.post("/api/submit-dog-info")  # @app.post decorator handles POST requests
 async def submit_dog_info(data: DogQuestionnaireInput):  # Pydantic model automatically validates incoming JSON

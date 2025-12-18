@@ -1,8 +1,15 @@
 :root {
-    color: #3e2723;
-    background-color: #f5f5dc;
+    /* Palette: blanched almond background, accents in dark cranberry and deep green */
+    --bg: #FFEBCD; /* blanched almond */
+    --text: #2f2a26; /* near-black for body text */
+    --muted: #6b5a4a; /* warm gray/tan */
+    --accent-cran: #6b0f1a; /* dark cranberry */
+    --accent-green: #0b3d2e; /* deep green */
+    --card-bg: #fbf6f0; /* very light tan for cards */
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 18px;
+    font-size: 20px; /* larger base font for readability */
+    color: var(--text);
+    background-color: var(--bg);
 }
 
 * {
@@ -11,9 +18,10 @@
 
 body {
     margin: 0;
-    padding: 32px 20px 64px;
+    padding: 36px 20px 72px;
     display: flex;
     justify-content: center;
+    background-color: var(--bg);
 }
 
 main {
@@ -28,23 +36,24 @@ main {
 }
 
 .header-logo {
-    width: 180px;
+    width: 100%;
+    max-width: 760px;
     height: auto;
     display: block;
-    margin: 0 auto 12px;
-    border-radius: 14px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    margin: 0 auto 18px;
+    border-radius: 10px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
 }
 
 h1 {
-    color: #8b0000;
-    font-size: 34px;
-    margin: 8px 0 12px;
+    color: var(--accent-cran);
+    font-size: 36px;
+    margin: 10px 0 12px;
 }
 
 h2 {
-    color: #8b0000;
-    font-size: 28px;
+    color: var(--accent-cran);
+    font-size: 30px;
     margin: 0 0 12px;
     text-align: center;
 }
@@ -56,11 +65,12 @@ h2 {
 }
 
 .card {
-    background-color: #faebd7;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    background-color: var(--card-bg);
+    padding: 34px;
+    border-radius: 14px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.10);
     margin: 0 auto 32px;
+    border-left: 6px solid var(--accent-green);
 }
 
 form {
@@ -69,8 +79,8 @@ form {
 
 label {
     display: block;
-    color: #654321;
-    font-weight: bold;
+    color: var(--text);
+    font-weight: 700;
     font-size: 20px;
     margin-top: 18px;
     margin-bottom: 8px;
@@ -80,12 +90,12 @@ input[type="text"],
 input[type="number"],
 select {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     font-size: 18px;
     font-family: Georgia, serif;
-    border: 2px solid #8b4513;
-    border-radius: 6px;
-    background-color: #fffaf0;
+    border: 2px solid rgba(11,61,46,0.18);
+    border-radius: 8px;
+    background-color: #ffffff;
 }
 
 input[type="text"]:focus,
@@ -97,11 +107,11 @@ select:focus {
 }
 
 fieldset {
-    border: 2px solid #8b4513;
-    border-radius: 8px;
+    border: 2px solid rgba(107,15,26,0.14);
+    border-radius: 10px;
     padding: 20px;
     margin-top: 12px;
-    background-color: #fff8dc;
+    background-color: #fffdf8;
 }
 
 legend {
@@ -136,27 +146,26 @@ input[type="checkbox"] {
 }
 
 button[type="submit"] {
-    background-color: #b22222;
+    background-color: var(--accent-cran);
     color: #ffffff;
     font-family: Georgia, serif;
     font-size: 20px;
-    font-weight: bold;
-    padding: 15px 40px;
+    font-weight: 700;
+    padding: 16px 40px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     margin-top: 24px;
     width: 100%;
-    transition: background-color 0.3s ease, transform 0.12s ease;
+    transition: background-color 0.2s ease, transform 0.08s ease;
 }
 
 button[type="submit"]:hover {
-    background-color: #8b0000;
+    background-color: #4f0710;
 }
 
 button[type="submit"]:active {
-    background-color: #660000;
-    transform: scale(0.99);
+    transform: translateY(1px);
 }
 
 .helper-text {
@@ -166,20 +175,60 @@ button[type="submit"]:active {
     margin-top: 4px;
 }
 
+/* AI results styling: displayed below the questionnaire form */
+.ai-results {
+    margin-top: 18px;
+    padding: 16px 18px;
+    background-color: #ffffff;
+    border-left: 5px solid var(--accent-green);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    color: #3e2723;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.ai-results ol {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.ai-results li {
+    margin: 8px 0;
+}
+
+.ai-results-title {
+    margin: 0 0 8px;
+    font-size: 20px;
+    color: #6b0000;
+    font-weight: 700;
+}
+
+.ai-results-disclaimer {
+    margin: 0 0 12px;
+    font-size: 14px;
+    color: #5d4037;
+    font-style: italic;
+}
+
+.ai-results-body {
+    margin-top: 8px;
+}
+
 .logo-divider {
     width: 100%;
-    max-width: 520px;
+    max-width: 640px;
     height: auto;
     display: block;
     margin: 36px auto;
-    opacity: 0.8;
+    opacity: 0.95;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
 }
 
 .admin-info {
     text-align: center;
-    color: #654321;
+    color: var(--muted);
     font-size: 16px;
     margin: 0 0 16px;
     font-style: italic;

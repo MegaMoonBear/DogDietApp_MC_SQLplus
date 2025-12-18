@@ -8,12 +8,13 @@
 </head>
 <body>
     <header class="hero">
-        <img src="./public/assets/doggy.jpeg" alt="WhiskerWorthy" class="header-logo">
+        <!-- Use origami banner from assets for a modern, clean header image -->
+        <img src="./public/assets/Banner_origami_habitat.png" alt="WhiskerWorthy" class="header-logo">
         <h1>WhiskerWorthy</h1>
         <p class="intro-text">
-            WhiskerWorthy helps you consider factors to choose foods for your dog and discuss them with your veterinarian.
-            Answer three quick questions to prep for your next vet visit and join a community of dog owners who care about
-            proper feeding. Over the next few years, the information you share may help us collaborate with researchers and
+            WhiskerWorthy helps you consider things that relate to your dog's nutrition. Then you can discuss them with your veterinarian.
+            Answer 3 quick questions to prep for your next vet visit and join a community of dog owners who care about
+            proper feeding. Over the next few years, the information you share may help us learn about many more dogs, collaborate with researchers and
             shape smarter food recommendations.
         </p>
     </header>
@@ -21,9 +22,9 @@
     <main>
         <section class="card">
             <h2>Dog Diet Questionnaire</h2>
-            <p>Please answer 3 questions about your dog. Then we suggest 3 nutrition questions for you to ask your veterinarian.</p>
-            <p>If a "pit bull", please choose American Staffordshire Terrier. (Staffordshire Bull Terrier also listed.) Or select Other/Mixed.</p>
-            <p>Later phases will ask more about traits, health, breed, etc.</p>
+            <p>Please answer 3 questions about your dog. Then our system will suggest 3 nutrition questions for you to ask your veterinarian.</p>
+            <p>THe first option in the Breed list is "Other", including mixed. If a "pit bull", please choose American Staffordshire Terrier. (Alternatively use weights to choose one of these breeds: American Staffordshire Terrier: Males 55–70 lb (25–32 kg); Females 40–55 lb (18–25 kg); Staffordshire Bull Terrier: Males 28–38 lb (13–17 kg); Females 24–34 lb (11–15 kg) </p>
+            <p>Later phases will list more breeds and ask more about traits, health, breed, etc.</p>
             <form id="dogQuestionnaireForm" novalidate>
                 <label for="breed_name">Breed Name:</label>
                 <!-- Searchable breed input backed by a datalist populated from the DB -->
@@ -86,6 +87,8 @@
                 </fieldset>
 
                 <button type="submit">Submit Dog Information</button>
+                <!-- AI-generated vet questions will be rendered here after submission -->
+                <div id="aiQuestionsResult" class="ai-results" role="region" aria-live="polite"></div>
             </form>
         </section>
 
