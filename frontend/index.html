@@ -24,16 +24,18 @@
         <h2>Dog Biology Questions</h2> 
         <p>More breeds and questions about traits and health will be added in future updates.</p> <p>Please answer 3 questions about your dog. We’ll then suggest 3 questions you can ask your veterinarian.</p> 
         <!-- In-page click-to-unhide section --> 
-         <details> <summary> Don’t see your dog’s breed? Choose “Other,” including mixed breeds. <br /> 
+         <details> <summary> Don’t see your dog’s breed? Choose “Other,” including mixed breeds. 
+            <br> 
             <em>Curious about “pit bulls”? Click here ▸</em> 
-                </summary> <p> If your dog is often called a “pit bull,” please choose <strong>American Staffordshire Terrier</strong>. You can also use adult size to decide: 
-                </p> <ul> 
+                </summary> <p> If your dog is often called a “pit bull,” please choose <strong>American Staffordshire Terrier</strong>. You can also use adult size to choose between these:   </p> 
+                <ul> 
                     <li>American Staffordshire Terrier: about 40–70 lb</li> 
                     <li>Staffordshire Bull Terrier:     about 25–40 lb</li> 
                 </ul> 
                 <button type="button" id="nextButton">FUTURE "Click for weight range as kg." FUTURE</button>
         </details>
 
+<!--Many tries to vertically-orient page - banner & intro above form, above AI results - no card, etc.-->
             <form id="dogQuestionnaireForm" novalidate>
                 <label for="breed_name">Breed Name:</label>
                 <!-- Searchable breed input backed by a datalist populated from the DB -->
@@ -47,7 +49,17 @@
                     placeholder="Start typing to search breeds (e.g., Labrador Retriever)"
                 >
                 <!-- Datalist element receives <option> entries from frontend/public/main.js -->
-                <datalist id="breed_list"></datalist>
+                <datalist id="breed_list">
+                    <option value="Other">Other (mixed, unsure)</option>
+                    <option value="American Staffordshire Terrier">American Staffordshire Terrier</option>
+                    <option value="Beagle">Beagle</option>
+                    <option value="Chihuahua">Chihuahua</option>
+                    <option value="German Shepherd">German Shepherd</option>
+                    <option value="Golden Retriever">Golden Retriever</option>
+                    <option value="Labrador Retriever">Labrador Retriever</option>
+                    <option value="Shih Tzu">Shih Tzu</option>
+                    <option value="Staffordshire Bull Terrier">Staffordshire Bull Terrier</option>
+                </datalist>
                 <div class="helper-text">Choose 1 of 8 listed AKC breed names or "Other (mixed, unsure)".</div>
 
                 <label for="age_years">Dog's Age (years):</label>
@@ -99,7 +111,8 @@
                 <!-- AI-generated vet questions will be rendered here after submission -->
                 <div id="aiQuestionsResult" class="ai-results" role="region" aria-live="polite"></div>
             </form>
-            <p>After clicking "Submit...", AI-generated vet questions will appear below.</p>
+            <p>After clicking "Submit...", AI-generated vet questions will appear here.</p>
+            <br>
             <button type="button" id="nextButton">FUTURE "Click for weight++ questions" FUTURE</button>
         </section>
         <br>
