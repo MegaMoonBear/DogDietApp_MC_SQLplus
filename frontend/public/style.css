@@ -22,12 +22,31 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px; /* Add spacing between sections */
     background-color: var(--bg);
 }
 
+header.hero {
+    order: 1; /* Ensure banner is at the top */
+}
+
 main {
+    order: 2; /* Ensure intro info and form follow the banner */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Add spacing between intro info and form */
     max-width: 760px;
     width: 100%;
+}
+
+/* Placeholder for AI response section */
+.ai-response {
+    order: 3; /* Ensure AI response appears last */
+    display: none; /* Initially hidden until triggered */
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 .hero {
@@ -65,14 +84,26 @@ h2 {
     line-height: 1.6;
 }
 
+/* Commented out card styles */
+/*
 .card {
     background-color: var(--card-bg);
-    padding: 34px;
-    border-radius: 14px;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.10);
-    margin: 0 auto 32px;
-    border-left: 6px solid var(--accent-green);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px 0;
 }
+
+.card h2 {
+    color: var(--accent-cran);
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: var(--muted);
+    line-height: 1.5;
+}
+*/
 
 form {
     width: 100%;
@@ -225,6 +256,15 @@ button[type="submit"]:active {
     opacity: 0.95;
     border-radius: 8px;
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* Center and resize the banner-divider image */
+.banner-divider {
+    display: block;
+    margin: 0 auto; /* Centers the image */
+    width: 100%; /* Makes the image as wide as its container */
+    max-width: 760px; /* Matches the form's max-width */
+    height: auto; /* Maintains aspect ratio */
 }
 
 /*
