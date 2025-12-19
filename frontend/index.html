@@ -11,20 +11,28 @@
         <!-- Use origami banner from assets for a modern, clean header image -->
         <img src="./public/assets/Banner_origami_habitat.png" alt="WhiskerWorthy" class="header-logo">
         <h1>WhiskerWorthy</h1>
-        <p class="intro-text">
-            WhiskerWorthy helps you consider things that relate to your dog's nutrition. Then you can discuss them with your veterinarian.
-            Answer 3 quick questions to prep for your next vet visit and join a community of dog owners who care about
-            proper feeding. Over the next few years, the information you share may help us learn about many more dogs, collaborate with researchers and
-            shape smarter food recommendations.
-        </p>
+        <p class="intro-text"> Learn more about your dog’s biology through your veterinarian with WhiskerWorthy's help.</p>
+        <p>Answer 3 quick questions to get ready for your next vet visit. We’ll give you questions to ask your veterinarian.</p>
+        <p>You’re welcome to answer more questions anytime. Sharing a bit more helps researchers learn about your dog. Together with other owners, this can help improve care for all dogs.</p>
+        <p>Please answer more now or or in a month or more. If now, click the next button. If you're returning, scroll to questions to update us.</p>
+        <button type="button" id="nextButton">FUTURE "Click for weight++ questions" FUTURE</button>
     </header>
 
     <main>
         <section class="card">
-            <h2>Dog Diet Questionnaire</h2>
-            <p>Please answer 3 questions about your dog. Then our system will suggest 3 nutrition questions for you to ask your veterinarian.</p>
-            <p>THe first option in the Breed list is "Other", including mixed. If a "pit bull", please choose American Staffordshire Terrier. (Alternatively use weights to choose one of these breeds: American Staffordshire Terrier: Males 55–70 lb (25–32 kg); Females 40–55 lb (18–25 kg); Staffordshire Bull Terrier: Males 28–38 lb (13–17 kg); Females 24–34 lb (11–15 kg) </p>
-            <p>Later phases will list more breeds and ask more about traits, health, breed, etc.</p>
+        <h2>Dog Biology Questions</h2> 
+        <p>More breeds and questions about traits and health will be added in future updates.</p> <p>Please answer 3 questions about your dog. We’ll then suggest 3 questions you can ask your veterinarian.</p> 
+        <!-- In-page click-to-unhide section --> 
+         <details> <summary> Don’t see your dog’s breed? Choose “Other,” including mixed breeds. <br /> 
+            <em>Curious about “pit bulls”? Click here ▸</em> 
+                </summary> <p> If your dog is often called a “pit bull,” please choose <strong>American Staffordshire Terrier</strong>. You can also use adult size to decide: 
+                </p> <ul> 
+                    <li>American Staffordshire Terrier: about 40–70 lb</li> 
+                    <li>Staffordshire Bull Terrier:     about 25–40 lb</li> 
+                </ul> 
+                <button type="button" id="nextButton">FUTURE "Click for weight range as kg." FUTURE</button>
+        </details>
+
             <form id="dogQuestionnaireForm" novalidate>
                 <label for="breed_name">Breed Name:</label>
                 <!-- Searchable breed input backed by a datalist populated from the DB -->
@@ -39,7 +47,7 @@
                 >
                 <!-- Datalist element receives <option> entries from frontend/public/main.js -->
                 <datalist id="breed_list"></datalist>
-                <div class="helper-text">Choose official American Kennel Club breed name or "Other/Mixed/Unsure".</div>
+                <div class="helper-text">Choose 1 of 8 listed AKC breed names or "Other (mixed, unsure)".</div>
 
                 <label for="age_years">Dog's Age (years):</label>
                 <input
@@ -86,16 +94,18 @@
                     </div>
                 </fieldset>
 
-                <button type="submit">Submit Dog Information</button>
+                <button type="submit">Submit Answers</button>
                 <!-- AI-generated vet questions will be rendered here after submission -->
                 <div id="aiQuestionsResult" class="ai-results" role="region" aria-live="polite"></div>
             </form>
+            <p>After clicking "Submit...", AI-generated vet questions will appear below.</p>
+            <button type="button" id="nextButton">FUTURE "Click for weight++ questions" FUTURE</button>
         </section>
 
         <img
-            src="./public/assets/WhiskWorLogosGemini_Wide.png"
+            src=".\public\assets\Gemini_Banner_Center.png"
             alt="WhiskerWorthy Divider"
-            class="logo-divider"
+            class="banner-divider"
         >
 
         <!--
