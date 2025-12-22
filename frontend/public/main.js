@@ -48,62 +48,27 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try {
-        const response = await fetch('/api/submit-dog-info', {
+        const response = await fetch('/api/submit', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify(payload),
         });
 
-        const result = await parseJson(response);
-
         if (response.ok) {
-          // Show success briefly and then request AI-generated questions
+          const result = await response.json();
           const aiResults = document.getElementById('aiQuestionsResult');
-          if (aiResults) aiResults.innerHTML = '<h3 class="ai-results-title">AI-Generated Vet Questions</h3><p class="ai-results-disclaimer">Generating three simple, educational questions to discuss with your veterinarian. This is informational only — not medical advice.</p><div class="ai-results-body">Submitted — generating vet questions...</div>';
-
-          // Call AI endpoint with same payload to generate vet questions
-          try {
-            const aiResp = await fetch('/api/questions/ai', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload),
+          if (aiResults) {
+            aiResults.innerHTML = '';
+            result.questions.forEach((q) => {
+              const p = document.createElement('p');
+              p.textContent = q;
+              aiResults.appendChild(p);
             });
-
-            const aiData = await parseJson(aiResp);
-
-            if (!aiResp.ok) {
-              if (aiResults) aiResults.innerHTML = '<h3 class="ai-results-title">AI-Generated Vet Questions</h3><p class="ai-results-disclaimer">Three simple, educational questions to discuss with your veterinarian. This is informational only — not medical advice.</p><div class="ai-results-body">' + (aiData.detail || 'Failed to generate questions.') + '</div>';
-            } else {
-              const q = aiData.questions;
-              let items = [];
-              if (Array.isArray(q)) items = q;
-              else if (typeof q === 'string') items = q.split(/\n+/).map(s => s.trim()).filter(Boolean);
-
-              if (items.length === 0) {
-                if (aiResults) aiResults.innerHTML = '<h3 class="ai-results-title">AI-Generated Vet Questions</h3><p class="ai-results-disclaimer">Three simple, educational questions to discuss with your veterinarian. This is informational only — not medical advice.</p><div class="ai-results-body">No questions returned.</div>';
-              } else {
-                const ol = document.createElement('ol');
-                items.forEach((txt) => {
-                  const li = document.createElement('li');
-                  li.textContent = txt;
-                  ol.appendChild(li);
-                });
-                if (aiResults) {
-                  aiResults.innerHTML = '<h3 class="ai-results-title">AI-Generated Vet Questions</h3><p class="ai-results-disclaimer">Three simple, educational questions to discuss with your veterinarian. This is informational only — not medical advice.</p><div class="ai-results-body"></div>';
-                  aiResults.querySelector('.ai-results-body').appendChild(ol);
-                }
-              }
-            }
-          } catch (err) {
-            console.error('AI generation failed', err);
-            const aiResults = document.getElementById('aiQuestionsResult');
-            if (aiResults) aiResults.innerHTML = '<h3 class="ai-results-title">AI-Generated Vet Questions</h3><p class="ai-results-disclaimer">Three simple, educational questions to discuss with your veterinarian. This is informational only — not medical advice.</p><div class="ai-results-body">Error generating questions. Check your connection.</div>';
           }
-
-          // Reset form after handling
-          dogForm.reset();
         } else {
-          alert(result.detail ? `Error: ${result.detail}` : 'Error submitting form.');
+          alert('Failed to submit the form. Please try again.');
         }
       } catch (error) {
         console.error('Submission error:', error);

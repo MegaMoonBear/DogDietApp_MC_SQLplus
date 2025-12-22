@@ -46,8 +46,10 @@
                     name="breed_name_AKC"
                     list="breed_list"
                     required
-                    placeholder="Start typing to search breeds (e.g., Labrador Retriever)"
+                    placeholder="Start typing to search the 8 AKC breeds (e.g., Labrador Retriever)"
                 >
+            <!--The DB "breed..." table to be the source, when accessible. Then list on lines 52-62 should be the backup. (My ultimate goal is for the list to expand, as we add breeds as records in that table.) When the backend database tables are accessible, will the "breed..." table's breed name list be the source? 
+            When I click the form's "Submit..." button to trigger the AI responses, I get a warning or error that "Tenant or user not found". -->
                 <!-- Datalist element receives <option> entries from frontend/public/main.js -->
                 <datalist id="breed_list">
                     <option value="Other">Other (mixed, unsure)</option>
@@ -199,5 +201,27 @@
     </main>
 
     <script src="./public/main.js"></script>
+    <script>
+                    async function populateBreedList() {
+                        try {
+                            const response = await fetch('/breeds');
+                            if (!response.ok) {
+                                throw new Error('Failed to fetch breeds from the database.');
+                            }
+                            const breeds = await response.json();
+                            const breedList = document.getElementById('breed_list');
+                            breedList.innerHTML = '';
+                            breeds.forEach(breed => {
+                                const option = document.createElement('option');
+                                option.value = breed;
+                                breedList.appendChild(option);
+                            });
+                        } catch (error) {
+                            console.error('Error fetching breeds:', error);
+                        }
+                    }
+
+                    document.addEventListener('DOMContentLoaded', populateBreedList);
+                </script>
 </body>
 </html>

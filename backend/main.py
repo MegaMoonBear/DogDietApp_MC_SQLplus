@@ -7,7 +7,7 @@
     # PUT route for full replacements
 
 
-from fastapi import FastAPI, HTTPException, Path, Query  # Import FastAPI framework and utilities
+from fastapi import FastAPI, HTTPException, Path, Query, Request  # Import FastAPI framework and utilities
 from fastapi.middleware.cors import CORSMiddleware  # Import CORS middleware to allow frontend to call backend from different origin
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -19,10 +19,11 @@ from contextlib import asynccontextmanager
 from fastapi.concurrency import run_in_threadpool
 
 # Import business logic from services folder
-from services.report_service import choose_report  # Import the report selection function
+from .services.report_service import choose_report  # Import the report selection function
+from .services.chat_services import chat_with_gpt
 
-# Import Pydantic schemas from schemas folder
-from schemas.schemas import (
+# Adjusted imports to use relative paths
+from .schemas.schemas import (
     DogQuestionnaireInput,  # User questionnaire input model
     BreedCreateInput,  # Create new breed input model
     BreedUpdateInput,  # Partial breed update input model
@@ -32,14 +33,13 @@ from schemas.schemas import (
 )
 
 # Import database connection functions from models folder
-from models.database import (
+from .models.database import (
     get_database_pool,  # Initialize connection pool
     close_database_pool,  # Close connection pool on shutdown
     execute_query,  # Execute INSERT/UPDATE queries
     fetch_one,  # Fetch single row
     fetch_all  # Fetch multiple rows
 )
-from services.chat_services import chat_with_gpt
 
 # ==================== Application Lifecycle Events ====================
 
@@ -418,6 +418,26 @@ async def update_breed_full(
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# ==================== Added Endpoint - Handle Form Submissions ====================
+
+# Added endpoint to handle form submission
+@app.post("/api/submit")
+async def submit_form(request: Request):
+    data = await request.json()
+    breed_name = data.get("breed_name_AKC")
+    age_years = data.get("age_years_preReg")
+    statuses = data.get("status_dietRelat_preReg", [])
+
+    # Simulate AI response generation
+    ai_questions = [
+        f"What is the ideal diet for a {breed_name}?",
+        "Are there any specific health concerns to watch for?",
+        "What is the recommended exercise routine?",
+    ]
+
+    return {"questions": ai_questions}
 
 
 # ==================== Server Entry Point ====================
